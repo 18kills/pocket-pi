@@ -1,1 +1,16 @@
-#!bin/bash
+#!/bin/bash
+
+email="user@anything.com"
+
+#User inputs email account
+getInfo() {
+  read -p "Enter your email address: " email
+}
+
+#sends email to the entered email address on start up
+#with information
+sendEmail() {
+  ip=$( ifconfig | grep "inet addr:" )
+  essid=$( iwconfig | grep "ESSID:" )
+  echo "$( ip essid )" | mail -s "Ip" $email
+}
