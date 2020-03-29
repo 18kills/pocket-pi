@@ -1,18 +1,13 @@
 #!/bin/bash
 
-email="user@anything.com"
-
-#User inputs email account
-getInfo() {
-  read -p "Enter your email address: " email
-}
-
-#sends email to the entered email address on start up
-#with information
-sendEmail() {
-  #Get wireles interface name
-  wlan=$(iwconfig | grep "IEEE")
+#Get wireles interface name
+wlan=$(iwconfig | grep "IEEE")
+for x in {1..5}
+do
   wlan=${wlan%IEEE*}
+done
+
+sendEmail() {
   #Get ip address
   ip=$( ifconfig | grep "inet addr:" )
   ip=${ip:50}
@@ -25,4 +20,17 @@ sendEmail() {
   #Send the email
   echo "$wlan\n$ip\n$essid\n$sshStatus" | mail -s "PocketPi $(hostname)" $email
 }
+#Create open network
+startAP() {
+  sudo ifconfig $wlan down
+  cd create_ap
+  sudo create_ap -n $wlan PocketPi
+}
 
+#Check if pi is connected to the internet
+if ping -c 1 8.8.8.8 &> /dev/null
+then
+  sendEmail
+else
+  startAP
+fi
