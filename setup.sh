@@ -1,5 +1,7 @@
 #!/bin/bash
 
+email="user@anything.com"
+
 #Install needed packages
 installPackages(){
   sudo apt-get update
