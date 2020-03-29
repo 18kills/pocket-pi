@@ -18,7 +18,7 @@ installPackages(){
 }
 #Configure the PocketPi program
 pocketPiConf(){
-	cd /home/pi
+	cd /home/pi/pocket-pi
 	echo $email
 	read -p "enter:"
 	#Make pocketPi executable
