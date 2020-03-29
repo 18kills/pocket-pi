@@ -1,15 +1,19 @@
 #!/bin/bash
-sudo apt-get update
-#install ssmtp and mailutils
-sudo apt-get install ssmtp mailutils --yes
-sudo apt-get update --fix-missing
-sudo apt-get install ssmtp mailutils --yes
-#install create_ap
-git clone https://github.com/oblique/create_ap.git
-cd create_ap
-sudo make install
-#Install hostapd
-sudo apt-get install hostapd --yes
+
+install(){
+  sudo apt-get update
+  #install ssmtp and mailutils
+  sudo apt-get install ssmtp mailutils --yes
+  sudo apt-get update --fix-missing
+  sudo apt-get install ssmtp mailutils --yes
+  #Install hostapd
+  sudo apt-get install hostapd --yes
+  #install create_ap
+  git clone https://github.com/oblique/create_ap.git
+  cd create_ap
+  sudo make install
+}
+
 #Make pocketPi executable
 chmod +x PocketPi
 #Copy file to /etc
