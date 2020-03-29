@@ -18,6 +18,9 @@ installPackages(){
 }
 #Configure the PocketPi program
 pocketPiConf(){
+	cd /home/pi
+	echo $email
+	read -p "enter:"
 	#Make pocketPi executable
 	chmod +x PocketPi
 	#Copy file to /etc
