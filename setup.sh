@@ -12,8 +12,10 @@ sudo make install
 sudo apt-get install hostapd --yes
 #Make pocketPi executable
 chmod +x PocketPi
-
-sudo echo "sudo ./home/pi/PocketPi & exit 0" 
+#Copy file to /etc
+sudo cp /home/pi/PocketPi/PocketPi /etc/PocketPi
+#Edit /etc/rc.local to run the PocketPi program on boot
+sudo echo "sudo ./etc/PocketPi & exit 0" 
 
 #Setup ssmtp to send mail through a gmail account
 email="user@anything.com"
