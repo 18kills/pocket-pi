@@ -1,4 +1,4 @@
-#!bin/bash
+#!/bin/bash
 sudo apt-get update
 #install ssmtp and mailutils
 sudo apt-get install ssmtp mailutils --yes
