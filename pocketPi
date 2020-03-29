@@ -10,7 +10,19 @@ getInfo() {
 #sends email to the entered email address on start up
 #with information
 sendEmail() {
+  #Get wireles interface name
+  wlan=$(iwconfig | grep "IEEE")
+  wlan=${wlan%IEEE*}
+  #Get ip address
   ip=$( ifconfig | grep "inet addr:" )
+  ip=${ip:50}
+  #Get essid of network connected to
   essid=$( iwconfig | grep "ESSID:" )
-  echo "$( ip essid )" | mail -s "Ip" $email
+  essid=${essid#*ESSID:}
+  #Get ssh status
+  sshStatus=$(service ssh status | grep "Active:")
+  sshStatus="SSH "$sshStatus
+  #Send the email
+  echo "$wlan\n$ip\n$essid\n$sshStatus" | mail -s "PocketPi $(hostname)" $email
 }
+
