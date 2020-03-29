@@ -19,8 +19,6 @@ installPackages(){
 #Configure the PocketPi program
 pocketPiConf(){
 	cd /home/pi/pocket-pi
-	echo $email
-	read -p "enter:"
 	#Make pocketPi executable
 	chmod +x PocketPi
 	#Copy file to /etc
@@ -30,6 +28,7 @@ pocketPiConf(){
 }
 #Setup mailing
 MailSetup(){
+	cd /home/pi/pocket-pi
 	#Setup ssmtp to send mail through a gmail account
 	email="user@anything.com"
 	emailPass="password"
