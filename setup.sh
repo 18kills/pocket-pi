@@ -12,3 +12,17 @@ cd create_ap
 sudo make install
 #Make pocketPi executable
 chmod +x pocketPi.sh
+
+#Setup ssmtp to send mail through a gmail account
+email="user@anything.com"
+emailPass="password"
+#User inputs email account
+echo "If you are using a gmail account make sure that less secure app access is on"
+echo "Input Example: user@gmail.com"
+read -p "Enter your full email address: " email
+read -p "Enter your password to your email: " emailPass
+
+
+emailProvider=${email#*@}
+emailProvider=${emailProvider%.*}
+
