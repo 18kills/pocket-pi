@@ -34,3 +34,5 @@ sudo echo "UseSTARTTLS=YES" >> /etc/ssmtp/ssmtp.conf
 
 #install network manager
 sudo apt-get install network-manager --yes
+#Install hostapd
+sudo apt-get install hostapd --yes
