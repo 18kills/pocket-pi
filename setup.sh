@@ -8,8 +8,12 @@ sudo apt-get install ssmtp mailutils --yes
 git clone https://github.com/oblique/create_ap.git
 cd create_ap
 sudo make install
+#Install hostapd
+sudo apt-get install hostapd --yes
 #Make pocketPi executable
-chmod +x pocketPi.sh
+chmod +x PocketPi
+
+sudo echo "sudo ./home/pi/PocketPi & exit 0" 
 
 #Setup ssmtp to send mail through a gmail account
 email="user@anything.com"
@@ -31,8 +35,3 @@ sudo echo "FromLineOverride=YES" >> /etc/ssmtp/ssmtp.conf
 sudo echo "AuthUser=$email" >> /etc/ssmtp/ssmtp.conf
 sudo echo "AuthPass=$emailPass" >> /etc/ssmtp/ssmtp.conf
 sudo echo "UseSTARTTLS=YES" >> /etc/ssmtp/ssmtp.conf
-
-#install network manager
-sudo apt-get install network-manager --yes
-#Install hostapd
-sudo apt-get install hostapd --yes
