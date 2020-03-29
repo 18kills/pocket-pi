@@ -13,7 +13,7 @@ sudo apt-get install hostapd --yes
 #Make pocketPi executable
 chmod +x PocketPi
 #Copy file to /etc
-sudo cp /home/pi/PocketPi/PocketPi /etc/PocketPi
+sudo cp /home/pi/pocket-pi/PocketPi /etc/PocketPi
 #Edit /etc/rc.local to run the PocketPi program on boot
 sudo echo "sudo ./etc/PocketPi & exit 0" 
 
