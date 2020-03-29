@@ -28,7 +28,7 @@ read -p "Enter your password to your email: " emailPass
 #Get the mailhub address
 emailProvider=${email#*@}
 emailProvider=${emailProvider%.*}
-mailhub=$( cat | grep "$emailProvider" )
+mailhub=$( cat MailServers | grep "$emailProvider" )
 #Make the ssmtp config file
 sudo echo "root=$email" > /etc/ssmtp/ssmtp.conf
 sudo echo "mailhub=$mailhub" >> /etc/ssmtp/ssmtp.conf
