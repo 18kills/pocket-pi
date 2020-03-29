@@ -4,8 +4,6 @@ sudo apt-get update
 sudo apt-get install ssmtp mailutils --yes
 sudo apt-get update --fix-missing
 sudo apt-get install ssmtp mailutils --yes
-#install network manager
-sudo apt-get install network-manager --yes
 #install create_ap
 git clone https://github.com/oblique/create_ap.git
 cd create_ap
@@ -21,8 +19,18 @@ echo "If you are using a gmail account make sure that less secure app access is 
 echo "Input Example: user@gmail.com"
 read -p "Enter your full email address: " email
 read -p "Enter your password to your email: " emailPass
-
-
+#Get the mailhub address
 emailProvider=${email#*@}
 emailProvider=${emailProvider%.*}
+mailhub=$( cat | grep "$emailProvider" )
+#Make the ssmtp config file
+sudo echo "root=$email" > /etc/ssmtp/ssmtp.conf
+sudo echo "mailhub=$mailhub" >> /etc/ssmtp/ssmtp.conf
+sudo echo "hostname=$(hostname)" >> /etc/ssmtp/ssmtp.conf
+sudo echo "FromLineOverride=YES" >> /etc/ssmtp/ssmtp.conf
+sudo echo "AuthUser=$email" >> /etc/ssmtp/ssmtp.conf
+sudo echo "AuthPass=$emailPass" >> /etc/ssmtp/ssmtp.conf
+sudo echo "UseSTARTTLS=YES" >> /etc/ssmtp/ssmtp.conf
 
+#install network manager
+sudo apt-get install network-manager --yes
