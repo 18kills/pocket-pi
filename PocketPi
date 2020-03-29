@@ -1,5 +1,7 @@
 #!/bin/bash
 
+email=$1
+
 #Get wireles interface name
 wlan=$(iwconfig | grep "IEEE")
 for x in {1..5}
