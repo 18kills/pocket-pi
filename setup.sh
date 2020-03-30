@@ -26,7 +26,7 @@ pocketPiConf(){
 	sudo cp /home/pi/pocket-pi/PocketPi /etc/PocketPi
 	sudo chmod +x /etc/PocketPi
 	#Edit /etc/rc.local to run the PocketPi program on boot
-	sudo echo "sudo ./etc/PocketPi $email $emailPass & exit 0" > /etc/rc.local
+	sudo echo "#!/bin/sh -e\nsudo ./etc/PocketPi $email $emailPass &\nexit 0" > /etc/rc.local
 }
 #Setup mailing
 MailSetup(){
