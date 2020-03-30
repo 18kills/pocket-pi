@@ -1,6 +1,7 @@
 #!/bin/bash
 
 email=$1
+pass=$2
 
 #Get wireles interface name
 wlan=$(iwconfig | grep "IEEE")
@@ -20,7 +21,20 @@ sendEmail() {
   sshStatus=$(service ssh status | grep "Active:")
   sshStatus="SSH "$sshStatus
   #Send the email
-  echo "$wlan\n$ip\n$essid\n$sshStatus" | mail -s "PocketPi $(hostname)" $email
+  echo "import smtplib" > tmpSend.py
+  emailProvider=${email#*@}
+	emailProvider=${emailProvider%.*}
+	mailhub=$( cat MailServers | grep "$emailProvider" )
+  server=${mailhub#*:}
+  port=${mailhub%:*}
+  echo "server=smtplib.SMTP('$server',$port)" >> tmpSend.py
+  echo "server.starttls()" >> tmpSend.py
+  echo "server.login('$email','$pass')" >> tmpSend.py
+  echo "msg='$wlan\n$ip\n$essid\n$sshStatus'" >> tmpSend.py
+  echo "server.sendmail('$email','$email',msg)" >> tmpSend.py
+  echo "server.quit()" >> tmpSend.py
+  chmod +x tmpSend.py
+  sudo python2 tmpSend.py
 }
 #Create open network
 startAP() {
