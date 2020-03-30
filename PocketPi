@@ -8,24 +8,28 @@ wlan=$(iwconfig | grep "IEEE")
 for x in {1..5}
 do
   wlan=${wlan%IEEE*}
+  wlan="${wlan//+([[:space:]])/}"
 done
 
 sendEmail() {
   #Get ip address
   ip=$( ifconfig | grep "inet addr:" )
   ip=${ip:50}
+  ip="${ip//+([[:space:]])/}"
   #Get essid of network connected to
   essid=$( iwconfig | grep "ESSID:" )
   essid=${essid#*ESSID:}
+  essid="${essid//+([[:space:]])/}"
   #Get ssh status
   sshStatus=$(service ssh status | grep "Active:")
   sshStatus="SSH "$sshStatus
+  sshStatus="${sshStatus//+([[:space:]])/}"
   #Send the email
   echo "import smtplib" > tmpSend.py
   emailProvider=${email#*@}
-	emailProvider=${emailProvider%.*}
-	mailhub=$( cat MailServers | grep "$emailProvider" )
-	mailhub="${mailhub//+([[:space:]])/}"
+  emailProvider=${emailProvider%.*}
+  emailhub=$( cat MailServers | grep "$emailProvider" )
+  mailhub="${mailhub//+([[:space:]])/}"
   server=${mailhub#*:}
   port=${mailhub%:*}
   echo "server=smtplib.SMTP('$server',$port)" >> tmpSend.py
