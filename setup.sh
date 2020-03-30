@@ -1,6 +1,7 @@
 #!/bin/bash
 
 email="user@anything.com"
+emailPass="password"
 
 #Install needed packages
 installPackages(){
@@ -24,7 +25,7 @@ pocketPiConf(){
 	#Copy file to /etc
 	sudo cp /home/pi/pocket-pi/PocketPi /etc/PocketPi
 	#Edit /etc/rc.local to run the PocketPi program on boot
-	sudo echo "sudo ./etc/PocketPi $email & exit 0" > /etc/rc.local
+	sudo echo "sudo ./etc/PocketPi $email $emailPass & exit 0" > /etc/rc.local
 }
 #Setup mailing
 MailSetup(){
