@@ -35,7 +35,7 @@ sendEmail() {
   sudo echo "import smtplib" > tmpSend.py
   emailProvider=${email#*@}
   emailProvider=${emailProvider%.*}
-  emailhub=$( cat MailServers | grep "$emailProvider" )
+  emailhub=$( sudo cat /etc/pocket-pi/MailServers | grep "$emailProvider" )
   port=${emailhub#*:}
   server=${emailhub%:*}
   sudo echo "server=smtplib.SMTP('$server',$port)" >> tmpSend.py
