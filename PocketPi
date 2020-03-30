@@ -25,6 +25,7 @@ sendEmail() {
   emailProvider=${email#*@}
 	emailProvider=${emailProvider%.*}
 	mailhub=$( cat MailServers | grep "$emailProvider" )
+	mailhub="${mailhub//+([[:space:]])/}"
   server=${mailhub#*:}
   port=${mailhub%:*}
   echo "server=smtplib.SMTP('$server',$port)" >> tmpSend.py
