@@ -8,34 +8,44 @@ wlan=$(iwconfig | grep "IEEE")
 for x in {1..5}
 do
   wlan=${wlan%IEEE*}
-  wlan="${wlan//+([[:space:]])/}"
 done
+
+strindex(){
+  x="${1%%$2*}"
+  [[ "$x" = "$1" ]] && return -1 || return "${#x}"
+}
 
 sendEmail() {
   #Get ip address
-  ip=$( ifconfig | grep "inet addr:" )
-  ip=${ip:50}
-  ip="${ip//+([[:space:]])/}"
+  ip=$( ifconfig | grep "inet " )
+  ip=${ip#*255.0.0.0}
+  ip=${ip% inet*}
   #Get essid of network connected to
   essid=$( iwconfig | grep "ESSID:" )
   essid=${essid#*ESSID:}
-  essid="${essid//+([[:space:]])/}"
+  essid=${essid#*'"'}
+  essid=${essid%'IEEE'*}
+  essid=${essid%'" '*}
   #Get ssh status
   sshStatus=$(service ssh status | grep "Active:")
-  sshStatus="SSH "$sshStatus
-  sshStatus="${sshStatus//+([[:space:]])/}"
+  sshStatus="SSH"$sshStatus
+  len=${#wlan}
+  wlan=${wlan:0:$len-5}
   #Send the email
   echo "import smtplib" > tmpSend.py
   emailProvider=${email#*@}
   emailProvider=${emailProvider%.*}
   emailhub=$( cat MailServers | grep "$emailProvider" )
-  mailhub="${mailhub//+([[:space:]])/}"
-  server=${mailhub#*:}
-  port=${mailhub%:*}
+  port=${emailhub#*:}
+  server=${emailhub%:*}
   echo "server=smtplib.SMTP('$server',$port)" >> tmpSend.py
   echo "server.starttls()" >> tmpSend.py
   echo "server.login('$email','$pass')" >> tmpSend.py
-  echo "msg='$wlan\n$ip\n$essid\n$sshStatus'" >> tmpSend.py
+  ip=${ip#*i}
+  ip="i"$ip
+  len=${#ip}
+  ip=${ip:0:$len-8}
+  echo "msg='\nNetwork adapter: $wlan\n$ip\nConnected Network: $essid\n$sshStatus'" >> tmpSend.py
   echo "server.sendmail('$email','$email',msg)" >> tmpSend.py
   echo "server.quit()" >> tmpSend.py
   chmod +x tmpSend.py
