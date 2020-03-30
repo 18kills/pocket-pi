@@ -20,15 +20,10 @@ installPackages(){
 #Configure the PocketPi program
 pocketPiConf(){
 	cd /home/pi/pocket-pi
-	sudo mkdir /etc/pocket-pi
 	#Make pocketPi executable
 	chmod +x PocketPi
-	#Copy file to /etc
-	sudo cp /home/pi/pocket-pi/MailServers /etc/pocket-pi/MailServers
-	sudo cp /home/pi/pocket-pi/PocketPi /etc/pocket-pi/PocketPi
-	sudo chmod +x /etc/pocket-pi/PocketPi
 	#Edit /etc/rc.local to run the PocketPi program on boot
-	sudo echo -e "#!/bin/sh -e\nsudo sh -c /etc/pocket-pi/PocketPi $email $emailPass &\nexit 0" > /etc/rc.local
+	sudo echo -e "#!/bin/sh -e\nsudo sh -c /home/pi/pocket-pi/PocketPi $email $emailPass &\nexit 0" > /etc/rc.local
 }
 #Setup mailing
 MailSetup(){
