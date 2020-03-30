@@ -41,6 +41,7 @@ MailSetup(){
 	#Get the mailhub address
 	emailProvider=${email#*@}
 	emailProvider=${emailProvider%.*}
+	emailProvider="${emailProvider//+([[:space:]])/}"
 	mailhub=$( cat MailServers | grep "$emailProvider" )
 	#Make the ssmtp config file
 	sudo echo "root=$email" > /etc/ssmtp/ssmtp.conf
