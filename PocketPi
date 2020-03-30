@@ -51,6 +51,7 @@ sendEmail() {
   sudo echo "server.quit()" >> tmpSend.py
   chmod +x tmpSend.py
   sudo python2 tmpSend.py
+  sudo rm tmpSend.py
 }
 #Create open network
 startAP() {
