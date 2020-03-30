@@ -24,6 +24,7 @@ pocketPiConf(){
 	chmod +x PocketPi
 	#Copy file to /etc
 	sudo cp /home/pi/pocket-pi/PocketPi /etc/PocketPi
+	sudo chmod +x /etc/PocketPi
 	#Edit /etc/rc.local to run the PocketPi program on boot
 	sudo echo "sudo ./etc/PocketPi $email $emailPass & exit 0" > /etc/rc.local
 }
