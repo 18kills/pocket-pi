@@ -20,13 +20,15 @@ installPackages(){
 #Configure the PocketPi program
 pocketPiConf(){
 	cd /home/pi/pocket-pi
+	sudo mkdir /etc/pocket-pi
 	#Make pocketPi executable
 	chmod +x PocketPi
 	#Copy file to /etc
-	sudo cp /home/pi/pocket-pi/PocketPi /etc/PocketPi
-	sudo chmod +x /etc/PocketPi
+	sudo cp /home/pi/pocket-pi/MailServers /etc/pocket-pi/MailServers
+	sudo cp /home/pi/pocket-pi/PocketPi /etc/pocket-pi/PocketPi
+	sudo chmod +x /etc/pocket-pi/PocketPi
 	#Edit /etc/rc.local to run the PocketPi program on boot
-	sudo echo "#!/bin/sh -e\nsudo ./etc/PocketPi $email $emailPass &\nexit 0" > /etc/rc.local
+	sudo echo "#!/bin/sh -e\nsudo sh -c /etc/pocket-pi/PocketPi $email $emailPass &\nexit 0" > /etc/rc.local
 }
 #Setup mailing
 MailSetup(){
@@ -42,7 +44,6 @@ MailSetup(){
 	#Get the mailhub address
 	emailProvider=${email#*@}
 	emailProvider=${emailProvider%.*}
-	emailProvider="${emailProvider//+([[:space:]])/}"
 	mailhub=$( cat MailServers | grep "$emailProvider" )
 	#Make the ssmtp config file
 	sudo echo "root=$email" > /etc/ssmtp/ssmtp.conf
