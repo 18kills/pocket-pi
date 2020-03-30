@@ -32,23 +32,23 @@ sendEmail() {
   len=${#wlan}
   wlan=${wlan:0:$len-5}
   #Send the email
-  echo "import smtplib" > tmpSend.py
+  sudo echo "import smtplib" > tmpSend.py
   emailProvider=${email#*@}
   emailProvider=${emailProvider%.*}
   emailhub=$( cat MailServers | grep "$emailProvider" )
   port=${emailhub#*:}
   server=${emailhub%:*}
-  echo "server=smtplib.SMTP('$server',$port)" >> tmpSend.py
-  echo "server.starttls()" >> tmpSend.py
-  echo "server.login('$email','$pass')" >> tmpSend.py
+  sudo echo "server=smtplib.SMTP('$server',$port)" >> tmpSend.py
+  sudo echo "server.starttls()" >> tmpSend.py
+  sudo echo "server.login('$email','$pass')" >> tmpSend.py
   ip=${ip#*i}
   ip="i"$ip
   ip=${ip%Bcast*}
   len=${#ip}
   ip=${ip:0:$len-1}
-  echo "msg='\nNetwork adapter: $wlan\n$ip\nConnected Network: $essid\n$sshStatus'" >> tmpSend.py
-  echo "server.sendmail('$email','$email',msg)" >> tmpSend.py
-  echo "server.quit()" >> tmpSend.py
+  sudo echo "msg='\nNetwork adapter: $wlan\n$ip\nConnected Network: $essid\n$sshStatus'" >> tmpSend.py
+  sudo echo "server.sendmail('$email','$email',msg)" >> tmpSend.py
+  sudo echo "server.quit()" >> tmpSend.py
   chmod +x tmpSend.py
   sudo python2 tmpSend.py
 }
