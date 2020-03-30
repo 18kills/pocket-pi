@@ -43,8 +43,9 @@ sendEmail() {
   echo "server.login('$email','$pass')" >> tmpSend.py
   ip=${ip#*i}
   ip="i"$ip
+  ip=${ip%Bcast*}
   len=${#ip}
-  ip=${ip:0:$len-8}
+  ip=${ip:0:$len-1}
   echo "msg='\nNetwork adapter: $wlan\n$ip\nConnected Network: $essid\n$sshStatus'" >> tmpSend.py
   echo "server.sendmail('$email','$email',msg)" >> tmpSend.py
   echo "server.quit()" >> tmpSend.py
